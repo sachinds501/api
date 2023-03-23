@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'allusers.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -30,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         // stringResponse = response.body;
         mapResponse = json.decode(response.body);
-        dataResponse = mapResponse!['data'][2]; //3rd user data
+        dataResponse = mapResponse!['data'][2]; // Fetching 3rd user data
       });
     }
   }
@@ -48,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
                 alignment: Alignment.center,
                 color: Colors.blue,
-                height: 200,
                 width: 250,
                 child: dataResponse == null
                     ? const Text("Data is Loading")
@@ -59,7 +60,23 @@ class _MyHomePageState extends State<MyHomePage> {
                           Image.network(dataResponse!['avatar'].toString()),
                           Text("Firstname : ${dataResponse!['first_name']}"),
                           Text("Id : ${dataResponse!['id'].toString()}"),
-                          Text("Email : ${dataResponse!['email'].toString()}")
+                          Text("Email : ${dataResponse!['email'].toString()}"),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  elevation: MaterialStateProperty.all(0),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white)),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((context) => AllUsers())));
+                              },
+                              child: const Text(
+                                "View all users",
+                                style: TextStyle(color: Colors.black),
+                              ))
                         ],
                       )),
           ],
